@@ -17,7 +17,13 @@
  */
 
 const express = require('express');
-const fetch = require('node-fetch');
+// Import node-fetch in a way that works with both CommonJS and ES modules.  If
+// node-fetch returns an object with a default property (as in ESM), use
+// that; otherwise use the returned function directly.  This avoids the
+// "fetch is not a function" error seen when running under older Node
+// versions or certain bundlers.
+const fetchImport = require('node-fetch');
+const fetch = fetchImport.default || fetchImport;
 
 const app = express();
 
